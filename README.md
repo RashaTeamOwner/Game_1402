@@ -2,6 +2,7 @@
 
 Need for Speed: Dead Racer is a simple racing game where you control a car on a three-lane road. Your goal is to avoid the random cars coming from the front and survive as long as possible. The speed of the car gradually increases, making the game more challenging over time.
 
+
 ## How to Play
 
 - Use the arrow keys to switch lanes and avoid the incoming cars.
@@ -21,3 +22,4 @@ Need for Speed: Dead Racer is a simple racing game where you control a car on a 
 3. Run the game.py file to start the game.
 
 ## Screenshots
+
