@@ -1,7 +1,10 @@
 # Need for Speed: Dead Racer
 
-Need for Speed: Dead Racer is a simple racing game where you control a car on a three-lane road. Your goal is to avoid the random cars coming from the front and survive as long as possible. The speed of the car gradually increases, making the game more challenging over time.
+[Game](#game) | [How to Play](#how-to-play) | [Technologies Used](#technologies-used) | [Installation](#installation) | [Team Members](#team-members)
 
+## Game
+
+Need for Speed: Dead Racer is a simple racing game where you control a car on a three-lane road. Your goal is to avoid the random cars coming from the front and survive as long as possible. The speed of the car gradually increases, making the game more challenging over time.
 
 ## How to Play
 
@@ -21,5 +24,9 @@ Need for Speed: Dead Racer is a simple racing game where you control a car on a 
 2. Make sure you have Python and Pygame installed.
 3. Run the game.py file to start the game.
 
-## Screenshots
+## Team Members
 
+- [Mohammad Reza Elahi](https://github.com/mohammadrezaelahi)
+- [Mahshad Esmati](https://github.com/mahshadesmati)
+- [Aram Moradian](https://github.com/OhSorrow)
+- [Hossein Rezagholi Gol](https://github.com/hossein-rg)
