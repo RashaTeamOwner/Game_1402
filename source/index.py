@@ -3,7 +3,8 @@ import sys
 import pygame
 
 from components.car import Car
-from settings.base_settings import Settings
+from settings import Settings
+from components import Car
 
 
 class CarRacing:
@@ -21,7 +22,7 @@ class CarRacing:
         self.bg_y = 0
 
         self.car = Car(self, pygame)
-        
+        pygame.display.set_icon(self.car.carImg)
 
     def racing_window(self):
         self.gameDisplay = pygame.display.set_mode((self.settings.display_width, self.settings.display_height))
@@ -36,7 +37,7 @@ class CarRacing:
                 if event.type == pygame.QUIT:
                     sys.exit()
 
-                if (event.type == pygame.KEYDOWN):
+                if event.type == pygame.KEYDOWN:
                     self._check_keydown_events(event)
 
             self.set_background()
