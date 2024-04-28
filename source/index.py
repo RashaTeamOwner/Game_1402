@@ -2,6 +2,7 @@ from time import sleep
 import sys
 import pygame
 
+from source.components.car import Car
 from source.settings.base_settings import Settings
 
 
@@ -15,7 +16,8 @@ class CarRacing:
         self.clock = pygame.time.Clock()
         self.gameDisplay = None
 
-        self.initialize()
+        self.car = Car(self, pygame)
+        # self.initialize()
 
     def initialize(self):
 
@@ -28,8 +30,7 @@ class CarRacing:
         self.bg_x = (self.settings.display_width / 2) - (360 / 2)
         self.bg_y = 0
 
-    def car(self, car_x_coordinate, car_y_coordinate):
-        self.gameDisplay.blit(self.carImg, (car_x_coordinate, car_y_coordinate))
+
 
     def racing_window(self):
         self.gameDisplay = pygame.display.set_mode((self.settings.display_width, self.settings.display_height))
@@ -47,17 +48,17 @@ class CarRacing:
 
                 if (event.type == pygame.KEYDOWN):
                     if (event.key == pygame.K_LEFT):
-                        self.car_x_coordinate -= 75
-                        print("CAR X COORDINATES: %s" % self.car_x_coordinate)
+                        self.car.car_x_coordinate -= 75
+                        print("CAR X COORDINATES: %s" % self.car.car_x_coordinate)
                     if (event.key == pygame.K_RIGHT):
-                        self.car_x_coordinate += 75
-                        print("CAR X COORDINATES: %s" % self.car_x_coordinate)
-                    print("x: {x}, y: {y}".format(x=self.car_x_coordinate, y=self.car_y_coordinate))
+                        self.car.car_x_coordinate += 75
+                        print("CAR X COORDINATES: %s" % self.car.car_x_coordinate)
+                    print("x: {x}, y: {y}".format(x=self.car.car_x_coordinate, y=self.car.car_y_coordinate))
 
             self.gameDisplay.fill(self.settings.black_color)
-            self.gameDisplay.blit(self.bgImg, (self.bg_x, self.bg_y))
 
-            self.car(self.car_x_coordinate, self.car_y_coordinate)
+
+            self.car.show(self)
 
             pygame.display.update()
             self.clock.tick(60)
