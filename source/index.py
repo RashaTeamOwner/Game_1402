@@ -2,36 +2,38 @@ from time import sleep
 import sys
 import pygame
 
+from source.settings.base_settings import Settings
+
+
 class CarRacing:
     def __init__(self):
-        
+
         pygame.init()
-        self.display_width = 900
-        self.display_height = 600
-        self.black = (0, 0, 0)
-        self.white = (255, 255, 255)
+        self.settings = Settings(color=(230, 230, 230))
+        self.screen = pygame.display.set_mode((self.settings.display_width, self.settings.display_height))
+        pygame.display.set_caption("Car racing")
         self.clock = pygame.time.Clock()
         self.gameDisplay = None
-        
+
         self.initialize()
 
     def initialize(self):
 
         self.carImg = pygame.image.load('..\\images\\car.png')
-        self.car_x_coordinate = (self.display_width / 2) - 25
-        self.car_y_coordinate = (self.display_height*0.82)
+        self.car_x_coordinate = (self.settings.display_width / 2) - 25
+        self.car_y_coordinate = (self.settings.display_height * 0.82)
         self.car_width = 50
         # Background
         self.bgImg = pygame.image.load("..\\images\\background.jpg")
-        self.bg_x = (self.display_width / 2) - (360 / 2)
+        self.bg_x = (self.settings.display_width / 2) - (360 / 2)
         self.bg_y = 0
 
     def car(self, car_x_coordinate, car_y_coordinate):
         self.gameDisplay.blit(self.carImg, (car_x_coordinate, car_y_coordinate))
 
     def racing_window(self):
-        self.gameDisplay = pygame.display.set_mode((self.display_width, self.display_height))
-        
+        self.gameDisplay = pygame.display.set_mode((self.settings.display_width, self.settings.display_height))
+
         self.run_car()
 
     def run_car(self):
@@ -46,21 +48,19 @@ class CarRacing:
                 if (event.type == pygame.KEYDOWN):
                     if (event.key == pygame.K_LEFT):
                         self.car_x_coordinate -= 75
-                        print ("CAR X COORDINATES: %s" % self.car_x_coordinate)
+                        print("CAR X COORDINATES: %s" % self.car_x_coordinate)
                     if (event.key == pygame.K_RIGHT):
                         self.car_x_coordinate += 75
-                        print ("CAR X COORDINATES: %s" % self.car_x_coordinate)
-                    print ("x: {x}, y: {y}".format(x=self.car_x_coordinate, y=self.car_y_coordinate))
+                        print("CAR X COORDINATES: %s" % self.car_x_coordinate)
+                    print("x: {x}, y: {y}".format(x=self.car_x_coordinate, y=self.car_y_coordinate))
 
-            self.gameDisplay.fill(self.black)
+            self.gameDisplay.fill(self.settings.black_color)
             self.gameDisplay.blit(self.bgImg, (self.bg_x, self.bg_y))
 
             self.car(self.car_x_coordinate, self.car_y_coordinate)
-           
+
             pygame.display.update()
             self.clock.tick(60)
-
-        
 
 
 if __name__ == '__main__':
