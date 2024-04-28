@@ -46,16 +46,9 @@ class CarRacing:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     sys.exit()
-                # print(event)
 
                 if (event.type == pygame.KEYDOWN):
-                    if (event.key == pygame.K_LEFT):
-                        self.car.car_x_coordinate -= 75
-                        print("CAR X COORDINATES: %s" % self.car.car_x_coordinate)
-                    if (event.key == pygame.K_RIGHT):
-                        self.car.car_x_coordinate += 75
-                        print("CAR X COORDINATES: %s" % self.car.car_x_coordinate)
-                    print("x: {x}, y: {y}".format(x=self.car.car_x_coordinate, y=self.car.car_y_coordinate))
+                    self._check_keydown_events(event)
 
             self.set_background()
 
@@ -67,6 +60,17 @@ class CarRacing:
     def set_background(self):
         self.gameDisplay.fill(self.settings.black_color)
         self.gameDisplay.blit(self.bgImg, (self.bg_x, self.bg_y))
+
+    def _check_keydown_events(self, event):
+        match event.key:
+            case pygame.K_LEFT:
+                self.car.car_x_coordinate -= 75
+                print("CAR X COORDINATES: %s" % self.car.car_x_coordinate)
+            case pygame.K_RIGHT:
+                self.car.car_x_coordinate += 75
+                print("CAR X COORDINATES: %s" % self.car.car_x_coordinate)
+
+        print("x: {x}, y: {y}".format(x=self.car.car_x_coordinate, y=self.car.car_y_coordinate))
 
 
 if __name__ == '__main__':

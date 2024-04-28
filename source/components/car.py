@@ -6,6 +6,5 @@ class Car:
         self.car_width = 50
         # Background
 
-
     def show(self, game):
         game.gameDisplay.blit(self.carImg, (self.car_x_coordinate, self.car_y_coordinate))
