@@ -2,8 +2,8 @@ from time import sleep
 import sys
 import pygame
 
-from source.components.car import Car
-from source.settings.base_settings import Settings
+from components.car import Car
+from settings.base_settings import Settings
 
 
 class CarRacing:
@@ -21,18 +21,7 @@ class CarRacing:
         self.bg_y = 0
 
         self.car = Car(self, pygame)
-        # self.initialize()
-
-    def initialize(self):
-
-        self.carImg = pygame.image.load('..\\images\\car.png')
-        self.car_x_coordinate = (self.settings.display_width / 2) - 25
-        self.car_y_coordinate = (self.settings.display_height * 0.82)
-        self.car_width = 50
-        # Background
-        self.bgImg = pygame.image.load("..\\images\\background.jpg")
-        self.bg_x = (self.settings.display_width / 2) - (360 / 2)
-        self.bg_y = 0
+        
 
     def racing_window(self):
         self.gameDisplay = pygame.display.set_mode((self.settings.display_width, self.settings.display_height))
