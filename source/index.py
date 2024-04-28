@@ -16,6 +16,10 @@ class CarRacing:
         self.clock = pygame.time.Clock()
         self.gameDisplay = None
 
+        self.bgImg = pygame.image.load("..\\images\\background.jpg")
+        self.bg_x = (self.settings.display_width / 2) - (360 / 2)
+        self.bg_y = 0
+
         self.car = Car(self, pygame)
         # self.initialize()
 
@@ -29,8 +33,6 @@ class CarRacing:
         self.bgImg = pygame.image.load("..\\images\\background.jpg")
         self.bg_x = (self.settings.display_width / 2) - (360 / 2)
         self.bg_y = 0
-
-
 
     def racing_window(self):
         self.gameDisplay = pygame.display.set_mode((self.settings.display_width, self.settings.display_height))
@@ -55,13 +57,16 @@ class CarRacing:
                         print("CAR X COORDINATES: %s" % self.car.car_x_coordinate)
                     print("x: {x}, y: {y}".format(x=self.car.car_x_coordinate, y=self.car.car_y_coordinate))
 
-            self.gameDisplay.fill(self.settings.black_color)
-
+            self.set_background()
 
             self.car.show(self)
 
             pygame.display.update()
             self.clock.tick(60)
+
+    def set_background(self):
+        self.gameDisplay.fill(self.settings.black_color)
+        self.gameDisplay.blit(self.bgImg, (self.bg_x, self.bg_y))
 
 
 if __name__ == '__main__':
