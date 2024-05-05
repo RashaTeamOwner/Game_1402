@@ -2,4 +2,4 @@ __all__ = [
     'Car',
 ]
 
-from source.components.car import Car
+from components.car import Car
