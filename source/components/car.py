@@ -2,7 +2,7 @@ class Car:
     def __init__(self, game, pygame):
         self.settings = game.settings
         self.game = game
-        self.carImg = pygame.image.load('..\\images\\car.png')
+        self.carImg = pygame.image.load('..\\images\\car1.png')
         self.car_x_coordinate = (game.settings.display_width / 2) - 25
         self.car_y_coordinate = (game.settings.display_height * 0.82)
         self.car_width = 50

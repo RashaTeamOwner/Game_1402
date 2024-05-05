@@ -57,7 +57,7 @@ class CarRacing:
             self.road()
             self.show_text()
             pygame.display.update()
-            self.clock.tick(300)
+            self.clock.tick(100)
 
     def set_background(self):
         self.gameDisplay.fill(self.settings.black_color)
