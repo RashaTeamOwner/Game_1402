@@ -21,12 +21,13 @@ class Car:
                 self.car_x_coordinate = 495
 
                 if self.settings.car_y_speed > 1:
-                    self.settings.increase /= 2
+                    self.settings.increase /= 3
                     self.settings.car_y_speed /= 2
-                    self.settings.car_x_speed /= 2
+                    if self.settings.car_x_speed > 2:
+                        self.settings.car_x_speed /= 2
 
-                if self.game.points > 100:
-                    self.game.points -= 100
+                if self.game.points > 50:
+                    self.game.points -= 50
                 else:
                     self.game.points = 0
             # print("CAR X COORDINATES: %s" % self.car_x_coordinate)
@@ -37,14 +38,16 @@ class Car:
                 self.car_x_coordinate = 355
 
                 if self.settings.car_y_speed > 1:
-                    self.settings.increase /= 2
+                    self.settings.increase /= 3
                     self.settings.car_y_speed /= 2
-                    self.settings.car_x_speed /= 2
+                    if self.settings.car_x_speed > 2:
+                        self.settings.car_x_speed /= 2
 
-                if self.game.points > 100:
-                    self.game.points -= 100
+                if self.game.points > 50:
+                    self.game.points -= 50
                 else:
                     self.game.points = 0
             # print("CAR X COORDINATES: %s" % self.car_x_coordinate)
 
         # Update rect object from self.x.
+

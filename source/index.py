@@ -38,7 +38,10 @@ class CarRacing:
         self.points = 1
         self.counter = 1
 
+        self.brake = False
+
         self.car = Car(self, pygame)
+
         pygame.display.set_icon(self.car.carImg)
 
     def racing_window(self):
@@ -55,9 +58,10 @@ class CarRacing:
             self.car.update()
             self.car.show(self)
             self.road()
+            self.speed_change()
             self.show_text()
             pygame.display.update()
-            self.clock.tick(100)
+            self.clock.tick(120)
 
     def set_background(self):
         self.gameDisplay.fill(self.settings.black_color)
@@ -90,6 +94,9 @@ class CarRacing:
         elif event.key == pygame.K_LEFT:
             self.car.moving_left = False
 
+        elif event.key == pygame.K_SPACE:
+            self.brake = False
+
         # print("x: {x}, y: {y}".format(x=self.car.car_x_coordinate, y=self.car.car_y_coordinate))
 
     def _check_keydown_events(self, event):
@@ -100,39 +107,50 @@ class CarRacing:
         elif event.key == pygame.K_LEFT:
             self.car.moving_left = True
 
-    def show_text(self):
-        self.counter += 1
-        if self.counter % 10 == 0:
-            self.points += 1 * self.settings.increase
+        elif event.key == pygame.K_SPACE:
+            self.brake = True
 
-        if self.counter % 10 == 0:
-            if self.settings.increase < 0.8:
-                self.settings.increase += 0.001
-                if self.counter % 1000 == 0:
-                    self.settings.car_y_speed += self.settings.increase
-                    if self.settings.car_y_speed > 5:
-                        self.settings.car_y_speed = 5
-                    self.settings.car_x_speed += self.settings.increase / 3
-            print(f'increase is: {self.settings.increase}')
-            # print(f'y speed is: {self.settings.car_y_speed}')
-            # print(f'x speed is: {self.settings.car_x_speed}')
-            print('-' * 30)
+    def show_text(self):
 
         text = self.font.render(f'Points : {int(self.points)}', True, self.settings.green_color)
-        text2 = self.font.render(f'<-- {int(self.settings.increase * 200)}', True,
-                                 (self.settings.car_y_speed * 48, 255 - self.settings.car_y_speed * 48, 0))
-        text3 = self.font.render(f'Speed', True, self.settings.white_color)
+        text2 = self.font.render(f'<-- {int(self.settings.car_y_speed * 32)}', True,
+                                 (self.settings.car_y_speed * 42.5, 255 - self.settings.car_y_speed * 42.5, 0))
+        text3 = self.font.render(f'Speed {self.settings.increase}', True, self.settings.white_color)
         text_rect = text.get_rect()
         text_rect2 = text2.get_rect()
         text_rect3 = text2.get_rect()
         text_rect.center = (150, 580)
-        text_rect2.center = (722, 520 - self.settings.increase * 400)
-        text_rect3.center = (700, 520)
+        text_rect2.center = (722, 520 - self.settings.car_y_speed * 60)
+        text_rect3.center = (700, 540)
         self.gameDisplay.blit(text, text_rect)
         self.gameDisplay.blit(text2, text_rect2)
         self.gameDisplay.blit(text3, text_rect3)
         # pygame.draw.rect(self.gameDisplay, self.settings.blue_color, (670, 300, 10, 200))
-        gradientRect(self.gameDisplay, (255, 0, 0), (255, 255, 0), pygame.Rect(670, 200, 10, 300))
+        gradientRect(self.gameDisplay, (255, 0, 0), (0, 255, 0), pygame.Rect(670, 120, 10, 400))
+
+    def speed_change(self):
+        self.counter += 1
+        if self.brake:
+            if self.counter % 10 == 0:
+                if self.settings.increase > 0.01:
+                    self.settings.increase -= 0.0001
+                if self.settings.car_y_speed > 1:
+                    self.settings.car_y_speed -= max(0.01875, self.settings.increase * 10)
+
+                if not self.settings.car_x_speed < 2:
+                    self.settings.car_x_speed -= 0.006
+
+        else:
+            if self.counter % 10 == 0:
+                self.points += 0.1 + self.settings.increase * 10
+                self.settings.increase += 0.0001
+
+            if self.counter % 10 == 0:
+                if not self.settings.car_y_speed > 6:
+                    self.settings.car_y_speed += max(0.01875, self.settings.increase)
+
+                if not self.settings.car_x_speed > 3:
+                    self.settings.car_x_speed += 0.006
 
 
 if __name__ == '__main__':
