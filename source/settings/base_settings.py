@@ -13,6 +13,6 @@ class Settings:
         self.car_x_speed = 2.0
         self.car_y_speed = 2.0
 
-        self.increase = 0.1
+        self.increase = 0.0
 
 
