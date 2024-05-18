@@ -1,5 +1,7 @@
 __all__ = [
     'Car',
+    'EnemyCar',
 ]
 
-from components.car import Car
+from .car import Car
+from .other_cars import EnemyCar

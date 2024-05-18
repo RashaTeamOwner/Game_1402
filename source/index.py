@@ -1,10 +1,11 @@
+import random
 from time import sleep
 import sys
 import pygame
 
 from components.car import Car
 from settings import Settings
-from components import Car
+from components import Car, EnemyCar
 
 
 def gradientRect(window, left_colour, right_colour, target_rect):
@@ -40,7 +41,10 @@ class CarRacing:
 
         self.brake = False
 
-        self.car = Car(self, pygame)
+        self.game_over = False
+
+        self.car = Car(self)
+        self.enemy_cars = pygame.sprite.Group()
 
         pygame.display.set_icon(self.car.carImg)
 
@@ -54,21 +58,77 @@ class CarRacing:
         while True:
             self._check_events()
 
-            self.set_background()
-            self.car.update()
-            self.car.show(self)
-            self.road()
-            self.speed_change()
-            self.show_text()
+            if not self.game_over:
+                self.set_background()
+                self.car.update()
+                self.car.show(self)
+
+                self.road()
+                self.speed_change()
+                self.show_text()
             pygame.display.update()
             self.clock.tick(120)
+
+            if self.game_over:
+                text = pygame.font.Font('freesansbold.ttf', 100).render(f'GAME OVER', True, self.settings.green_color,
+                                                                        self.settings.red_color)
+                text_rect = text.get_rect()
+                text_rect.center = (450, 300)
+                self.gameDisplay.blit(text, text_rect)
+                text = pygame.font.Font('freesansbold.ttf', 50).render(f'Points : {int(self.points)}', True,
+                                                                       self.settings.green_color,
+                                                                       self.settings.black_color)
+                text_rect = text.get_rect()
+                text_rect.center = (450, 375)
+                self.gameDisplay.blit(text, text_rect)
+
+                with open('file.txt', 'r+') as f:
+                    try:
+                        current_number = int(f.readline().strip())
+                    except ValueError:
+                        # If the file is empty or doesn't contain a valid number, set the current number to 0
+                        current_number = 0
+
+                    if int(self.points) > current_number:
+                        # Truncate the file to remove the existing content
+                        f.truncate(0)
+                        # Move the file pointer to the beginning of the file
+                        f.seek(0)
+                        # Write the new number to the file
+                        f.write(str(int(self.points)))
+
+
 
     def set_background(self):
         self.gameDisplay.fill(self.settings.black_color)
         self.gameDisplay.blit(self.bgImg1, (self.bg_x1, self.bg_y1))
         self.gameDisplay.blit(self.bgImg2, (self.bg_x2, self.bg_y2))
 
+
     def road(self):
+
+        for enemy_car in self.enemy_cars.copy():
+            if enemy_car.car_y_coordinate > 700:
+                print('removed')
+                self.enemy_cars.remove(enemy_car)
+
+        if len(self.enemy_cars) < 3:
+            try:
+                x = self.enemy_cars.sprites()[-1].rect.bottom
+                if x > 100:
+                    x = 0
+            except:
+                x = 0
+            new_enemy = EnemyCar(self, x)
+            self.enemy_cars.add(new_enemy)
+
+        for enemy_car in self.enemy_cars.sprites():
+            x = random.randrange(1, 5)
+            enemy_car.update(x)
+
+        for enemy_car in self.enemy_cars.sprites():
+            enemy_car.show(self)
+
         self.bg_y1 += self.settings.car_y_speed
         self.bg_y2 += self.settings.car_y_speed
         if self.bg_y1 >= 600:
@@ -115,7 +175,7 @@ class CarRacing:
         text = self.font.render(f'Points : {int(self.points)}', True, self.settings.green_color)
         text2 = self.font.render(f'<-- {int(self.settings.car_y_speed * 32)}', True,
                                  (self.settings.car_y_speed * 42.5, 255 - self.settings.car_y_speed * 42.5, 0))
-        text3 = self.font.render(f'Speed {self.settings.increase}', True, self.settings.white_color)
+        text3 = self.font.render(f'Speed', True, self.settings.white_color)
         text_rect = text.get_rect()
         text_rect2 = text2.get_rect()
         text_rect3 = text2.get_rect()
