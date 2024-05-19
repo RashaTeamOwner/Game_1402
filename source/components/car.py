@@ -12,7 +12,7 @@ class Car(Sprite):
         self.car_width = 50
         self.moving_right = False
         self.moving_left = False
-        self.rect = self.carImg.get_rect()
+        self.rect = pygame.Rect(self.car_x_coordinate - 2, self.car_y_coordinate - 2, 46, 96)
         # BackgroundS
 
     def show(self, game):
