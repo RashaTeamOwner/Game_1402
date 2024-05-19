@@ -7,6 +7,12 @@ from components.car import Car
 from settings import Settings
 from components import Car, EnemyCar
 
+with open('file.txt', 'r+') as f:
+    try:
+        MAX_SCORE = int(f.readline().strip())
+    except ValueError:
+        # If the file is empty or doesn't contain a valid number, set the current number to 0
+        MAX_SCORE = 0
 
 def gradientRect(window, left_colour, right_colour, target_rect):
     """ Draw a horizontal-gradient filled rectangle covering <target_rect> """
@@ -112,14 +118,8 @@ class CarRacing:
                 print('removed')
                 self.enemy_cars.remove(enemy_car)
 
-        if len(self.enemy_cars) < 3:
-            try:
-                x = self.enemy_cars.sprites()[-1].rect.bottom
-                if x > 100:
-                    x = 0
-            except:
-                x = 0
-            new_enemy = EnemyCar(self, x)
+        if len(self.enemy_cars) < 4:
+            new_enemy = EnemyCar(self, 0)
             self.enemy_cars.add(new_enemy)
 
         for enemy_car in self.enemy_cars.sprites():
@@ -176,15 +176,20 @@ class CarRacing:
         text2 = self.font.render(f'<-- {int(self.settings.car_y_speed * 32)}', True,
                                  (self.settings.car_y_speed * 42.5, 255 - self.settings.car_y_speed * 42.5, 0))
         text3 = self.font.render(f'Speed', True, self.settings.white_color)
+        text4 = self.font.render(f'MAX_SCORE : {MAX_SCORE}', True, self.settings.white_color)
+
         text_rect = text.get_rect()
         text_rect2 = text2.get_rect()
-        text_rect3 = text2.get_rect()
+        text_rect3 = text3.get_rect()
+        text_rect4 = text4.get_rect()
         text_rect.center = (150, 580)
         text_rect2.center = (722, 520 - self.settings.car_y_speed * 60)
         text_rect3.center = (700, 540)
+        text_rect4.center = (100, 200)
         self.gameDisplay.blit(text, text_rect)
         self.gameDisplay.blit(text2, text_rect2)
         self.gameDisplay.blit(text3, text_rect3)
+        self.gameDisplay.blit(text4, text_rect4)
         # pygame.draw.rect(self.gameDisplay, self.settings.blue_color, (670, 300, 10, 200))
         gradientRect(self.gameDisplay, (255, 0, 0), (0, 255, 0), pygame.Rect(670, 120, 10, 400))
 
