@@ -1,5 +1,9 @@
-class Car:
-    def __init__(self, game, pygame):
+import pygame
+from pygame.sprite import Sprite
+
+
+class Car(Sprite):
+    def __init__(self, game):
         self.settings = game.settings
         self.game = game
         self.carImg = pygame.image.load('..\\images\\car1.png')
@@ -8,7 +12,8 @@ class Car:
         self.car_width = 50
         self.moving_right = False
         self.moving_left = False
-        # Background
+        self.rect = self.carImg.get_rect()
+        # BackgroundS
 
     def show(self, game):
         game.gameDisplay.blit(self.carImg, (self.car_x_coordinate, self.car_y_coordinate))
@@ -49,5 +54,10 @@ class Car:
                     self.game.points = 0
             # print("CAR X COORDINATES: %s" % self.car_x_coordinate)
 
-        # Update rect object from self.x.
+        self.rect.x = self.car_x_coordinate
+        self.rect.y = self.car_y_coordinate
+
+        if pygame.sprite.spritecollideany(self.game.car, self.game.enemy_cars):
+            self.game.game_over = True
+            print("CRASHED")
 
