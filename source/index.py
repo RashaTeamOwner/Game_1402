@@ -177,6 +177,7 @@ class CarRacing:
                                  (self.settings.car_y_speed * 42.5, 255 - self.settings.car_y_speed * 42.5, 0))
         text3 = self.font.render(f'Speed', True, self.settings.white_color)
         text4 = self.font.render(f'MAX_SCORE : {MAX_SCORE}', True, self.settings.white_color)
+
         text_rect = text.get_rect()
         text_rect2 = text2.get_rect()
         text_rect3 = text3.get_rect()

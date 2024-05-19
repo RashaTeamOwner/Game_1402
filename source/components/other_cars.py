@@ -31,6 +31,7 @@ class EnemyCar(Sprite):
         self.rect.y = self.car_y_coordinate
 
 
+
     def show(self, game):
         game.gameDisplay.blit(self.carImg, self.rect)
 
@@ -39,7 +40,5 @@ class EnemyCar(Sprite):
         self.car_y_coordinate += self.ai_game.settings.car_y_speed * x / 10
 
         self.rect.y = self.car_y_coordinate
-
-
 
 
