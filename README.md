@@ -20,9 +20,30 @@ Need for Speed: Dead Racer is a simple racing game where you control a car on a 
 
 ## Installation
 
-1. Clone the repository to your local machine.
-2. Make sure you have Python and Pygame installed.
-3. Run the game.py file to start the game.
+1. **Clone the Repository:**
+
+   ```sh
+   git clone https://github.com/yourusername/need-for-speed-dead-racer.git
+   cd need-for-speed-dead-racer
+   ```
+
+2. **Set Up Virtual Environment:**
+
+   ```sh
+   python -m venv venv
+   source venv/bin/activate  # On Windows use `venv\Scripts\activate`
+   ```
+
+3. **Install Dependencies:**
+
+   ```sh
+   pip install pygame
+   ```
+
+4. **Run the Game:**
+   ```sh
+   python source/index.py
+   ```
 
 ## Team Members
 
