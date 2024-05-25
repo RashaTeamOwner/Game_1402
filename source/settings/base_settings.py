@@ -13,6 +13,8 @@ class Settings:
         self.car_x_speed = 2.0
         self.car_y_speed = 2.0
 
+        self.max_num_cars = 4
+
         self.increase = 0.0
 
 

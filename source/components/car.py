@@ -2,6 +2,9 @@ import pygame
 from pygame.sprite import Sprite
 
 
+pygame.mixer.init()
+crashed_sound = pygame.mixer.Sound("..\\sounds\\crash-7075.mp3")
+
 class Car(Sprite):
     def __init__(self, game):
         self.settings = game.settings
@@ -22,6 +25,7 @@ class Car(Sprite):
         if self.moving_right:
             self.car_x_coordinate += self.settings.car_x_speed
             if self.car_x_coordinate >= 510:
+                pygame.mixer.Sound.play(crashed_sound)
                 self.moving_right = False
                 self.car_x_coordinate = 495
 
@@ -39,6 +43,7 @@ class Car(Sprite):
         if self.moving_left:
             self.car_x_coordinate -= self.settings.car_x_speed
             if self.car_x_coordinate <= 340:
+                pygame.mixer.Sound.play(crashed_sound)
                 self.moving_left = False
                 self.car_x_coordinate = 355
 
@@ -58,6 +63,24 @@ class Car(Sprite):
         self.rect.y = self.car_y_coordinate
 
         if pygame.sprite.spritecollideany(self.game.car, self.game.enemy_cars):
-            self.game.game_over = True
+
+            pygame.mixer.Sound.play(crashed_sound)   # پخش صدای تصادف
+            self.game.chances -= 1  # کاهش شانس
+
+            for i, enemy_car in enumerate(self.game.enemy_cars.sprites()):  # پاک کردن ماشین های دشمن از روی صفحه
+                if enemy_car.rect.y > 300 and self.game.chances > 0:
+                    self.game.enemy_cars.remove(enemy_car)
+                # if len(self.game.enemy_cars.sprites()) < 2:
+                #     break
+
+            if self.settings.car_y_speed > 1:
+                self.settings.increase /= 3
+                self.settings.car_y_speed /= 2
+                if self.settings.car_x_speed > 2:
+                    self.settings.car_x_speed /= 2
+
+            if self.game.chances == 0:
+                pygame.mixer.music.stop()
+                self.game.game_over = True
             print("CRASHED")
 
